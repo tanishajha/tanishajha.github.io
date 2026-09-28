@@ -7,6 +7,7 @@
 <meta name="theme-color" content="#0b0d0f">
 <meta name="description" content="Tanisha Jha is a software developer and automation engineer from Delhi, building reliable systems from PLCs and robots to backend services.">
 <title>Tanisha Jha · Software Developer</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23d9663d'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-style='italic' font-size='36' text-anchor='middle' fill='%230b0d0f'%3ETJ%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -91,11 +92,27 @@ footer .w{display:flex;justify-content:space-between;gap:32px;flex-wrap:wrap}
 footer p{color:var(--mu);font-size:14px;margin-top:8px}footer div>a{display:block;color:var(--mu);font-size:14px;padding:2px 0}footer a:hover{color:var(--tx)}
 @media(max-width:820px){nav{display:none}.g3,.g2,.pr,.ab,.job{grid-template-columns:1fr}.tools{grid-template-columns:1fr 1fr}.job{gap:8px}.r>a:first-child{display:none}.mob{display:flex!important}.sec{margin-top:80px}.ab{gap:32px}.por{max-width:240px}}
 .mob{display:none;gap:22px;overflow-x:auto;padding:10px 24px;border-top:1px solid var(--line);font-size:14px}.mob a{color:var(--mu);white-space:nowrap}.mob a.on{color:var(--tx)}
+.brand::before{content:"TJ";display:inline-grid;place-items:center;width:26px;height:26px;border-radius:7px;background:var(--ac);color:#0b0d0f;font:italic 15px var(--serif);margin-right:10px;vertical-align:middle}
+#bg{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.6}
+main,footer{position:relative;z-index:1}
+@keyframes up{from{opacity:0;transform:translateY(22px)}}
+#app>.pill,#app>h1,#app>.lead,#app>.ctas,#app>.sess{animation:up .9s cubic-bezier(.2,.7,.2,1) both}
+#app>h1{animation-delay:.12s}#app>.lead{animation-delay:.26s}#app>.ctas{animation-delay:.4s}#app>.sess{animation-delay:.55s}
+.h{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s}.h.in{opacity:1;transform:none}
+.ty div{overflow:hidden;white-space:nowrap;animation:tp .6s steps(44) both;animation-delay:var(--d)}
+@keyframes tp{from{max-width:0}to{max-width:44ch}}
+.shot{overflow:hidden}.shot svg{width:100%;height:100%;transition:transform .5s}.shot img{width:100%;height:100%;object-fit:cover}.card:hover .shot svg{transform:scale(1.06)}
+.fl path{stroke-dasharray:5 6;animation:fl 1.2s linear infinite}@keyframes fl{to{stroke-dashoffset:-22}}
+.sw{transform-origin:160px 100px;animation:rt 4s linear infinite}@keyframes rt{to{transform:rotate(360deg)}}
+.sc{animation:sc 2.4s ease-in-out infinite}@keyframes sc{50%{transform:translateY(80px)}}
+.por{position:relative;overflow:hidden}.por img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+@media print{.h{opacity:1!important;transform:none!important}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 @media print{header,footer,#load,.noprint{display:none!important}body{background:#fff;color:#000}.paper{border:0;background:#fff;color:#000}.paper .row span:last-child,.paper p{color:#333}}
 </style>
 </head>
 <body>
+<canvas id="bg" aria-hidden="true"></canvas>
 <div id="load"><div class="mono" style="text-align:center">loading<i></i></div></div>
 <a href="#app" class="mono" style="position:absolute;left:-999px">Skip to content</a>
 <header>
@@ -129,7 +146,11 @@ const ACH=[['Bronze Medal','Arduino Off-roading Robotics Competition, Elysian\'2
 const CERT=[['Google Data Analytics Certificate','SQL, Spreadsheets, Tableau, R'],['Google Gen AI Academy (APAC Edition)','Generative AI, LLMs, Gemini'],['Amazon RA Intern Curriculum','Python, SQL, Machine Learning']];
 const T=[['Languages',['Java','Python','C++','SQL']],['Core CS',['Data Structures & Algorithms','OOP','DBMS','Operating Systems','Computer Networks','Multithreading']],['Cloud & tools',['AWS (S3, DynamoDB, EC2)','Git & GitHub','SQLite','MS Excel','unittest']],['Automation & robotics',['PLC, SCADA, HMI','Siemens TIA Portal','Rockwell Automation','ROS','OpenCV','Raspberry Pi']]];
 const tags=k=>`<ul class="tags">${k.map(x=>`<li>${x}</li>`).join('')}</ul>`;
-const shot=p=>`<div class="shot">${p.t.split(' ')[0].toLowerCase()}</div>`;
+const art=id=>({
+taskflow:`<svg viewBox="0 0 320 200" role="img" aria-label="Task dependency graph"><g class="fl" stroke="#d9663d" fill="none" stroke-width="1.5"><path d="M50 100H110M110 100L170 50M110 100L170 150M170 50L240 100M170 150L240 100M240 100H285"/></g><g fill="#15191c" stroke="#d9663d" stroke-width="1.5"><circle cx="50" cy="100" r="11"/><circle cx="110" cy="100" r="11"/><circle cx="170" cy="50" r="11"/><circle cx="170" cy="150" r="11"/><circle cx="240" cy="100" r="11"/></g><circle cx="285" cy="100" r="11" fill="#d9663d"/></svg>`,
+slam:`<svg viewBox="0 0 320 200" role="img" aria-label="LiDAR scan"><g fill="none" stroke="#242a2f"><circle cx="160" cy="100" r="30"/><circle cx="160" cy="100" r="60"/><circle cx="160" cy="100" r="90"/></g><g fill="#d9663d"><circle cx="118" cy="62" r="2"/><circle cx="205" cy="70" r="2"/><circle cx="222" cy="128" r="2"/><circle cx="150" cy="158" r="2"/><circle cx="98" cy="118" r="2"/><circle cx="192" cy="40" r="2"/></g><path class="sw" d="M160 100L250 100A90 90 0 0 0 233 47Z" fill="#d9663d" opacity=".28"/><circle cx="160" cy="100" r="5" fill="#d9663d"/></svg>`,
+face:`<svg viewBox="0 0 320 200" role="img" aria-label="Face detection frame"><path d="M100 60V40H120M220 40H240V60M240 140V160H220M120 160H100V140" fill="none" stroke="#d9663d" stroke-width="2"/><ellipse cx="160" cy="100" rx="30" ry="38" fill="none" stroke="#8b9299"/><g fill="#8b9299"><circle cx="148" cy="92" r="3"/><circle cx="172" cy="92" r="3"/></g><path d="M148 116Q160 126 172 116" fill="none" stroke="#8b9299"/><rect class="sc" x="104" y="60" width="112" height="2" fill="#d9663d"/></svg>`}[id]||'');
+const shot=p=>`<div class="shot">${p.img?`<img src="${p.img}" alt="${p.t} screenshot" loading="lazy">`:art(p.id)}</div>`;
 const jobs=()=>J.map(j=>`<div class="job"><div><p class="mono">${j.d}</p></div><div><h3>${j.r}</h3><p class="sub">${j.c}</p><ul>${j.b.map(b=>`<li>${b}</li>`).join('')}</ul></div></div>`).join('');
 const pos=()=>POS.map(j=>`<div class="job"><div></div><div><h3>${j.r}</h3><p class="sub">${j.c}</p><ul>${j.b.map(b=>`<li>${b}</li>`).join('')}</ul></div></div>`).join('');
 const pages={
@@ -137,9 +158,9 @@ home:()=>`<div class="pill mono">Open to software roles</div>
 <h1>I build software that holds, from the sensor to the server.</h1>
 <p class="lead">I write backend and systems code that <em>people can rely on</em>, and I understand it <em>all the way down</em>, from PLC logic on a factory floor to a scheduler running retries at 3am. Give me the messy, multi-step problem and I'll <em>own it end to end</em>.</p>
 <div class="ctas"><a class="btn p" href="#/projects">See the work</a><a class="btn" href="#/resume">Résumé</a></div>
-<div class="sess"><span class="mono">session</span><div><b>$</b> whoami<br><span>tanisha jha, b.tech automation & robotics</span><br><b>$</b> focus<br><span>backend, systems, automation</span><br><b>$</b> status<br><span>open to internships</span> <i class="cur"></i></div></div>
+<div class="sess"><span class="mono">session</span><div class="ty"><div style="--d:.7s"><b>$</b> whoami</div><div style="--d:1.2s"><span>tanisha jha, automation & robotics</span></div><div style="--d:2.2s"><b>$</b> focus</div><div style="--d:2.7s"><span>backend, systems, automation</span></div><div style="--d:3.6s"><b>$</b> status</div><div style="--d:4.1s"><span>open to internships</span> <i class="cur"></i></div></div></div>
 <section class="sec"><div class="sh"><div><span class="mono">selected work</span><h2>Things I actually built.</h2></div><a class="btn" href="#/projects">All projects</a></div>
-<div class="grid g3">${P.map(p=>`<a class="card" href="#/projects"><div class="shot">${p.t.split(' ')[0].toLowerCase()}</div><div class="cb"><div class="meta mono"><span>${p.y||'Project'}</span><span class="tag">${p.tag}</span></div><h3>${p.t}</h3><p>${p.s}</p></div></a>`).join('')}</div></section>
+<div class="grid g3">${P.map(p=>`<a class="card" href="#/projects">${shot(p)}<div class="cb"><div class="meta mono"><span>${p.y||'Project'}</span><span class="tag">${p.tag}</span></div><h3>${p.t}</h3><p>${p.s}</p></div></a>`).join('')}</div></section>
 <section class="sec"><span class="mono">what I do</span><div class="grid g3 what" style="margin-top:24px">
 <div><span class="mono">01</span><h3>Software & backend</h3><p>Python and Java services, schedulers and state machines with real tests behind them, from data structures to concurrency.</p></div>
 <div><span class="mono">02</span><h3>Automation & control</h3><p>PLC, SCADA and HMI logic that replaced error-prone manual testing and passed quality audits.</p></div>
@@ -154,7 +175,7 @@ work:()=>`<span class="mono">work</span><h2 class="eb" style="margin-top:10px">E
 <h2 class="eb">Leadership</h2>${pos()}
 <h2 class="eb">Achievements</h2><ul class="cert">${ACH.map(a=>`<li><b style="font-weight:500">${a[0]}</b><span style="color:var(--mu)">${a[1]}</span></li>`).join('')}</ul>
 <h2 class="eb">Certifications</h2><ul class="cert">${CERT.map(a=>`<li><b style="font-weight:500">${a[0]}</b><span style="color:var(--mu)">${a[1]}</span></li>`).join('')}</ul>`,
-about:()=>`<div class="ab"><div><div class="por">TJ</div><div class="facts"><div><span class="mono">Based in</span>Delhi, India</div><div><span class="mono">Studying</span>B.Tech Automation & Robotics, GGSIPU</div><div><span class="mono">Focus</span>Backend, systems, automation</div></div></div>
+about:()=>`<div class="ab"><div><div class="por">TJ<img src="portrait.jpg" alt="Tanisha Jha" onerror="this.remove()"></div><div class="facts"><div><span class="mono">Based in</span>Delhi, India</div><div><span class="mono">Studying</span>B.Tech Automation & Robotics, GGSIPU</div><div><span class="mono">Focus</span>Backend, systems, automation</div></div></div>
 <div><h1 class="sm">I build software and machines that have to work when nobody is watching.</h1><div style="height:32px"></div>
 <p>I'm the engineer who wants to see the thing <em>actually run</em>. I started in automation and robotics, where a bug means a stalled test rig or a robot driving into a wall, so I learned early to test, measure and write down the failure case first.</p>
 <p>At C&S Electric I wrote the PLC logic that replaced a manual contactor-testing cycle and cut test time by 40%. That habit carried into software: Taskflow models every job as a state machine with retries and failure isolation, and ships with 25 tests covering the parts that usually break.</p>
@@ -175,7 +196,18 @@ nv.innerHTML=N.map((n,i)=>`<a href="#/${n[0]}" data-p="${n[0]}"><span>0${i+1}</s
 mb.innerHTML=N.concat([['resume','Résumé']]).map(n=>`<a href="#/${n[0]}" data-p="${n[0]}">${n[1]}</a>`).join('');
 function go(){const p=location.hash.replace('#/','')||'home',k=pages[p]?p:'home';
 app.innerHTML=pages[k]();document.title=(k=='home'?'':k[0].toUpperCase()+k.slice(1)+' · ')+'Tanisha Jha'+(k=='home'?' · Software Developer':'');
-document.querySelectorAll('[data-p]').forEach(a=>a.classList.toggle('on',a.dataset.p==k));scrollTo(0,0)}
+document.querySelectorAll('[data-p]').forEach(a=>a.classList.toggle('on',a.dataset.p==k));scrollTo(0,0);rvl()}
+function rvl(){const o=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');o.unobserve(x.target)}}),{threshold:.12});
+document.querySelectorAll('.card,.what>div,.pr,.job,.now,.cta,.tools>div,.paper').forEach(e=>{e.classList.add('h');o.observe(e)})}
+(function(){const c=document.getElementById('bg'),x=c.getContext('2d');if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+let W,H,pts=[],m={x:-999,y:-999};
+function rs(){W=c.width=innerWidth;H=c.height=innerHeight;pts=Array.from({length:Math.min(70,W/18|0)},()=>({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3}))}
+rs();addEventListener('resize',rs);addEventListener('pointermove',e=>{m.x=e.clientX;m.y=e.clientY});
+(function f(){x.clearRect(0,0,W,H);for(const p of pts){p.x=(p.x+p.vx+W)%W;p.y=(p.y+p.vy+H)%H;
+const dx=p.x-m.x,dy=p.y-m.y,d=Math.hypot(dx,dy);if(d<140&&d>0){p.x+=dx/d*.8;p.y+=dy/d*.8}
+x.fillStyle='rgba(217,102,61,.7)';x.fillRect(p.x-1,p.y-1,2,2)}
+for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){const d=Math.hypot(pts[i].x-pts[j].x,pts[i].y-pts[j].y);if(d<120){x.strokeStyle=`rgba(217,102,61,${.18*(1-d/120)})`;x.beginPath();x.moveTo(pts[i].x,pts[i].y);x.lineTo(pts[j].x,pts[j].y);x.stroke()}}
+requestAnimationFrame(f)})()})();
 addEventListener('hashchange',go);go();
 setTimeout(()=>load.classList.add('off'),850);
 </script>
